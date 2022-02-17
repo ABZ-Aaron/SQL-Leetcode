@@ -55,12 +55,14 @@ Write an SQL query to find the average number of sessions per user for a period 
 ### My Solution
 
 ```SQL
-WITH myquery AS (
-SELECT user_id, 
-       session_id
-FROM Activity
-WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'
-GROUP BY user_id, session_id)
+WITH myquery AS 
+       (
+       SELECT user_id, 
+              session_id
+       FROM Activity
+       WHERE activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+       GROUP BY user_id, session_id
+       )
 SELECT 
     IFNULL(ROUND(COUNT(*) / COUNT(DISTINCT user_id), 2), 0.00) average_sessions_per_user
 FROM myquery;
