@@ -341,5 +341,219 @@ DELETE FROM Person WHERE id NOT IN (
 Surprisingly, this performed well. The logic is that we are grouping by email and selecting the smallest ID for those groups. We then delete any records where ID is not present in that output. The reason we have to do `SELECT * FROM (SELECT...)` is because in MYSQL we can't delete the table we are querying. So we have to query the table within the query.
 
 
+## QUESTION 620
 
+Table: Cinema
+```
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| id             | int      |
+| movie          | varchar  |
+| description    | varchar  |
+| rating         | float    |
++----------------+----------+
+```
+id is the primary key for this table.
+Each row contains information about the name of a movie, its genre, and its rating.
+rating is a 2 decimal places float in the range [0, 10]
+ 
 
+Write an SQL query to report the movies with an odd-numbered ID and a description that is not "boring".
+
+Return the result table ordered by rating in descending order.
+
+The query result format is in the following example.
+
+### MY SOLUTION
+
+```SQL
+SELECT * 
+FROM Cinema
+WHERE description != 'boring' AND
+      MOD(id, 2) != 0
+ORDER BY rating DESC;
+```
+
+## QUESTION 577
+
+Table: Employee
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| empId       | int     |
+| name        | varchar |
+| supervisor  | int     |
+| salary      | int     |
++-------------+---------+
+```
+empId is the primary key column for this table.
+Each row of this table indicates the name and the ID of an employee in addition to their salary and the id of their manager.
+ 
+
+Table: Bonus
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| empId       | int  |
+| bonus       | int  |
++-------------+------+
+```
+empId is the primary key column for this table.
+empId is a foreign key to empId from the Employee table.
+Each row of this table contains the id of an employee and their respective bonus.
+ 
+Write an SQL query to report the name and bonus amount of each employee with a bonus less than 1000.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+## MY SOLUTION
+
+```SQL
+SELECT name, bonus
+FROM Employee e
+LEFT JOIN Bonus b ON b.empId = e.empId
+WHERE bonus IS NULL OR bonus < 1000;
+```
+
+## QUESTION 595
+
+Table: World
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| name        | varchar |
+| continent   | varchar |
+| area        | int     |
+| population  | int     |
+| gdp         | int     |
++-------------+---------+
+```
+name is the primary key column for this table.
+Each row of this table gives information about the name of a country, the continent to which it belongs, its area, the population, and its GDP value.
+ 
+
+A country is big if:
+
+it has an area of at least three million (i.e., 3000000 km2), or
+it has a population of at least twenty-five million (i.e., 25000000).
+Write an SQL query to report the name, population, and area of the big countries.
+
+Return the result table in any order.
+
+The query result format is in the following example.
+
+### MY SOLUTION
+
+```SQL
+SELECT name, population, area
+FROM World
+WHERE area >= 3000000 OR population >= 25000000;
+```
+## QUESTION 2072
+
+Table: NewYork
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| student_id  | int  |
+| score       | int  |
++-------------+------+
+```
+student_id is the primary key for this table.
+Each row contains information about the score of one student from New York University in an exam.
+ 
+
+Table: California
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| student_id  | int  |
+| score       | int  |
++-------------+------+
+```
+student_id is the primary key for this table.
+Each row contains information about the score of one student from California University in an exam.
+ 
+
+There is a competition between New York University and California University. The competition is held between the same number of students from both universities. The university that has more excellent students wins the competition. If the two universities have the same number of excellent students, the competition ends in a draw.
+
+An excellent student is a student that scored 90% or more in the exam.
+
+Write an SQL query to report:
+
+"New York University" if New York University wins the competition.
+"California University" if California University wins the competition.
+"No Winner" if the competition ends in a draw.
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
+## QUESTION
+
+### MY SOLUTION
+
+```SQL
+```
