@@ -497,59 +497,340 @@ Write an SQL query to report:
 
 ```SQL
 ```
-## QUESTION
+## QUESTION ?
+
+Table: Customers
+```
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| customer_id   | int     |
+| name          | varchar |
+| country       | varchar |
++---------------+---------+
+```
+customer_id is the primary key for this table.
+This table contains information about the customers in the company.
+ 
+
+Table: Product
+```
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| description   | varchar |
+| price         | int     |
++---------------+---------+
+```
+product_id is the primary key for this table.
+This table contains information on the products in the company.
+price is the product cost.
+ 
+
+Table: Orders
+```
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| order_id      | int     |
+| customer_id   | int     |
+| product_id    | int     |
+| order_date    | date    |
+| quantity      | int     |
++---------------+---------+
+```
+order_id is the primary key for this table.
+This table contains information on customer orders.
+customer_id is the id of the customer who bought "quantity" products with id "product_id".
+Order_date is the date in format ('YYYY-MM-DD') when the order was shipped.
+ 
+
+Write an SQL query to report the customer_id and customer_name of customers who have spent at least $100 in each month of June and July 2020.
+
+Return the result table in any order.
+### MY SOLUTION
+
+```SQL
+SELECT c.customer_id, name
+FROM Orders o
+JOIN Customers c USING (customer_id)
+JOIN Product p USING (product_id)
+GROUP BY name
+HAVING SUM(CASE WHEN MONTH(order_date) = 6 THEN quantity*price END) >= 100 AND
+       SUM(CASE WHEN MONTH(order_date) = 7 THEN quantity*price END) >= 100;
+```
+## QUESTION 2026
+
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| problem_id  | int  |
+| likes       | int  |
+| dislikes    | int  |
++-------------+------+
+```
+problem_id is the primary key column for this table.
+Each row of this table indicates the number of likes and dislikes for a LeetCode problem.
+ 
+
+Write an SQL query to report the IDs of the low-quality problems. A LeetCode problem is low-quality if the like percentage of the problem (number of likes divided by the total number of votes) is strictly less than 60%.
+
+Return the result table ordered by problem_id in ascending order.
+
+### MY SOLUTION
+
+```SQL
+SELECT problem_id
+FROM Problems
+WHERE (likes / (likes + dislikes)) < .6
+ORDER BY problem_id;
+```
+## QUESTION 1050
+
+Table: ActorDirector
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| actor_id    | int     |
+| director_id | int     |
+| timestamp   | int     |
++-------------+---------+
+```
+timestamp is the primary key column for this table.
+ 
+
+Write a SQL query for a report that provides the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
+
+Return the result table in any order.
+
+### MY SOLUTION
+
+```SQL
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING SUM(1) >= 3;
+```
+## QUESTION ?
+
+Table Activities:
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| sell_date   | date    |
+| product     | varchar |
++-------------+---------+
+```
+There is no primary key for this table, it may contain duplicates.
+Each row of this table contains the product name and the date it was sold in a market.
+ 
+
+Write an SQL query to find for each date the number of different products sold and their names.
+
+The sold products names for each date should be sorted lexicographically.
+
+Return the result table ordered by sell_date.
+### MY SOLUTION
+
+```SQL
+SELECT sell_date, 
+       COUNT(DISTINCT product) AS num_sold,
+       GROUP_CONCAT(DISTINCT product ORDER BY product) AS products
+FROM Activities
+GROUP BY sell_date;
+```
+## QUESTION ?
+
+Table: Users
+```
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| name          | varchar |
++---------------+---------+
+```
+id is the primary key for this table.
+name is the name of the user.
+ 
+
+Table: Rides
+```
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| id            | int     |
+| user_id       | int     |
+| distance      | int     |
++---------------+---------+
+```
+id is the primary key for this table.
+user_id is the id of the user who traveled the distance "distance".
+ 
+Write an SQL query to report the distance traveled by each user.
+
+Return the result table ordered by travelled_distance in descending order, if two or more users traveled the same distance, order them by their name in ascending order.
+
+### MY SOLUTION
+
+```SQL
+SELECT name, IFNULL(SUM(distance), 0) travelled_distance
+FROM Rides r
+RIGHT JOIN Users u ON u.id = r.user_id
+GROUP by user_id
+ORDER BY travelled_distance DESC, name;
+```
+## QUESTION ?
+
+Table: NewYork
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| student_id  | int  |
+| score       | int  |
++-------------+------+
+```
+student_id is the primary key for this table.
+Each row contains information about the score of one student from New York University in an exam.
+ 
+
+Table: California
+```
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| student_id  | int  |
+| score       | int  |
++-------------+------+
+```
+student_id is the primary key for this table.
+Each row contains information about the score of one student from California University in an exam.
+ 
+
+There is a competition between New York University and California University. The competition is held between the same number of students from both universities. The university that has more excellent students wins the competition. If the two universities have the same number of excellent students, the competition ends in a draw.
+
+An excellent student is a student that scored 90% or more in the exam.
+
+Write an SQL query to report:
+
+"New York University" if New York University wins the competition.
+"California University" if California University wins the competition.
+"No Winner" if the competition ends in a draw.
 
 ### MY SOLUTION
 
 ```SQL
 ```
-## QUESTION
+## QUESTION ?
 
-### MY SOLUTION
-
-```SQL
+Table: Countries
 ```
-## QUESTION
-
-### MY SOLUTION
-
-```SQL
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| country_id    | int     |
+| country_name  | varchar |
++---------------+---------+
 ```
-## QUESTION
+country_id is the primary key for this table.
+Each row of this table contains the ID and the name of one country.
+ 
 
-### MY SOLUTION
+Table: Weather
 
-```SQL
 ```
-## QUESTION
-
-### MY SOLUTION
-
-```SQL
++---------------+------+
+| Column Name   | Type |
++---------------+------+
+| country_id    | int  |
+| weather_state | int  |
+| day           | date |
++---------------+------+
 ```
-## QUESTION
+(country_id, day) is the primary key for this table.
+Each row of this table indicates the weather state in a country for one day.
+ 
+
+Write an SQL query to find the type of weather in each country for November 2019.
+
+The type of weather is:
+
+Cold if the average weather_state is less than or equal 15,
+Hot if the average weather_state is greater than or equal to 25, and
+Warm otherwise.
+Return result table in any order.
+
 
 ### MY SOLUTION
 
 ```SQL
+SELECT country_name,
+       CASE 
+            WHEN AVG(weather_state) <= 15 THEN 'Cold'
+            WHEN AVG(weather_state) >= 25 THEN 'Hot'
+            ELSE 'Warm' 
+        END AS weather_type
+FROM Weather w
+JOIN Countries c USING (country_id)
+WHERE MONTH(day) = 11
+GROUP BY country_name;
 ```
-## QUESTION
+## QUESTION 1873
 
-### MY SOLUTION
-
-```SQL
+Table: Employees
 ```
-## QUESTION
-
-### MY SOLUTION
-
-```SQL
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| employee_id | int     |
+| name        | varchar |
+| salary      | int     |
++-------------+---------+
 ```
-## QUESTION
+employee_id is the primary key for this table.
+Each row of this table indicates the employee ID, employee name, and salary.
+ 
 
+Write an SQL query to calculate the bonus of each employee. The bonus of an employee is 100% of their salary if the ID of the employee is an odd number and the employee name does not start with the character 'M'. The bonus of an employee is 0 otherwise.
+
+Return the result table ordered by employee_id.
 ### MY SOLUTION
 
 ```SQL
+SELECT employee_id,
+       IF(MOD(employee_id, 2) <> 0 AND name NOT LIKE 'M%', salary, 0) as bonus
+FROM Employees;
+```
+## QUESTION 586
+
+Table: Orders
+```
++-----------------+----------+
+| Column Name     | Type     |
++-----------------+----------+
+| order_number    | int      |
+| customer_number | int      |
++-----------------+----------+
+```
+order_number is the primary key for this table.
+This table contains information about the order ID and the customer ID.
+ 
+Write an SQL query to find the customer_number for the customer who has placed the largest number of orders.
+
+The test cases are generated so that exactly one customer will have placed more orders than any other customer.
+### MY SOLUTION
+
+```SQL
+SELECT customer_number
+FROM Orders
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC
+LIMIT 1;
 ```
 ## QUESTION
 
