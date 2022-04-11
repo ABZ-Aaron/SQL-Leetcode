@@ -832,9 +832,37 @@ GROUP BY customer_number
 ORDER BY COUNT(*) DESC
 LIMIT 1;
 ```
-## QUESTION
+## QUESTION 2205
+
+Table: Purchases
+```
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| user_id     | int      |
+| time_stamp  | datetime |
+| amount      | int      |
++-------------+----------+
+```
+(user_id, time_stamp) is the primary key for this table.
+Each row contains information about the purchase time and the amount paid for the user with ID user_id.
+ 
+
+A user is eligible for a discount if they had a purchase in the inclusive interval of time [startDate, endDate] with at least minAmount amount.
+
+Write an SQL query to report the number of users that are eligible for a discount.
 
 ### MY SOLUTION
 
 ```SQL
+CREATE FUNCTION getUserIDs(startDate DATE, endDate DATE, minAmount INT) RETURNS INT
+BEGIN
+  RETURN (
+      # Write your MySQL query statement below.
+      SELECT COUNT(DISTINCT user_id)
+      FROM Purchases
+      WHERE (time_stamp BETWEEN startDate AND endDate) AND
+            amount >= minAmount
+  );
+END
 ```
