@@ -930,4 +930,96 @@ WHERE (player_id, event_date) IN
      FROM Activity
      GROUP BY player_id);
 ```
+## QUESTION 596
 
+Table: Courses
+
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| student     | varchar |
+| class       | varchar |
++-------------+---------+
+```
+(student, class) is the primary key column for this table.
+Each row of this table indicates the name of a student and the class in which they are enrolled.
+ 
+
+Write an SQL query to report all the classes that have at least five students.
+
+Return the result table in any order.
+
+### MY SOLUTION
+
+```SQL
+SELECT class
+FROM Courses 
+GROUP BY class
+HAVING COUNT(*) >= 5;
+```
+
+## QUESTION 584
+
+Table: Customer
+
+```
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| referee_id  | int     |
++-------------+---------+
+```
+id is the primary key column for this table.
+Each row of this table indicates the id of a customer, their name, and the id of the customer who referred them.
+ 
+
+Write an SQL query to report the IDs of the customer that are not referred by the customer with id = 2.
+
+Return the result table in any order.
+
+### MY SOLUTION 
+
+```SQL
+SELECT name 
+FROM Customer
+WHERE referee_id != 2 OR referee_id IS NULL;
+```
+
+## QUESTION 597
+
+Table: FriendRequest
+
+```
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| sender_id      | int     |
+| send_to_id     | int     |
+| request_date   | date    |
++----------------+---------+
+```
+There is no primary key for this table, it may contain duplicates.
+This table contains the ID of the user who sent the request, the ID of the user who received the request, and the date of the request.
+ 
+
+Table: RequestAccepted
+
+```
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| requester_id   | int     |
+| accepter_id    | int     |
+| accept_date    | date    |
++----------------+---------+
+```
+There is no primary key for this table, it may contain duplicates.
+This table contains the ID of the user who sent the request, the ID of the user who received the request, and the date when the request was accepted.
+ 
+
+Write an SQL query to find the overall acceptance rate of requests, which is the number of acceptance divided by the number of requests. Return the answer rounded to 2 decimals places.
+
+### MY SOLUTION
